@@ -1,7 +1,15 @@
 const mysql = require("mysql");
 const config = require("../config");
 
-function todos(tabla) {}
+const prueba = {
+  id: 1,
+  nombre: "Francisco",
+  edad: 20,
+};
+
+function todos(tabla) {
+  return prueba;
+}
 
 function uno(tabla, id) {}
 
