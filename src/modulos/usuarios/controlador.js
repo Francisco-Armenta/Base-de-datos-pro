@@ -1,4 +1,4 @@
-const TABLA = "Clientes";
+const TABLA = "Usuarios";
 
 module.exports = function (dbinyectada) {
   let db = dbinyectada;

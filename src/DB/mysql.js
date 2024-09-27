@@ -46,7 +46,7 @@ function uno(tabla, id) {
 }
 
 function agregar(tabla, data) {
-  if (data && data.id == 0) {
+  if (data && !data.id) {
     return insertar(tabla, data);
   } else {
     return actualizar(tabla, data);

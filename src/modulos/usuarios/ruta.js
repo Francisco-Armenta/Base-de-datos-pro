@@ -30,7 +30,6 @@ async function uno(req, res, next) {
 }
 
 async function agregar(req, res, next) {
-  console.log(req.body);
   try {
     const items = await controlador.agregar(req.body);
     if (req.body.id == 0 || !req.body.id) {
