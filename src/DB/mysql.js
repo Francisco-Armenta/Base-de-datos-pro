@@ -3,6 +3,7 @@ const config = require("../config");
 const { error } = require("../red/respuestas");
 
 let connection = null;
+
 function conMysql() {
   connection = mysql.createConnection({
     host: config.mysql.host,
@@ -46,25 +47,10 @@ function uno(tabla, id) {
 }
 
 function agregar(tabla, data) {
-  if (data && !data.id) {
-    return insertar(tabla, data);
-  } else {
-    return actualizar(tabla, data);
-  }
-}
-
-function insertar(tabla, data) {
-  return new Promise((resolve, reject) => {
-    connection.query(`INSERT INTO ${tabla} SET ?`, data, (err, result) => {
-      return err ? reject(err) : resolve(result);
-    });
-  });
-}
-function actualizar(tabla, data) {
   return new Promise((resolve, reject) => {
     connection.query(
-      `UPDATE ${tabla} SET ? WHERE id = ?`,
-      [data, data.id],
+      `INSERT INTO ${tabla} SET ? ON DUPLICATE KEY UPDATE ?`,
+      [data, data],
       (err, result) => {
         return err ? reject(err) : resolve(result);
       }
@@ -84,9 +70,22 @@ function eliminar(tabla, data) {
   });
 }
 
+function query(tabla, consulta) {
+  return new Promise((resolve, reject) => {
+    connection.query(
+      `SELECT * FROM ${tabla} WHERE ?`,
+      consulta,
+      (err, result) => {
+        return err ? reject(err) : resolve(result);
+      }
+    );
+  });
+}
+
 module.exports = {
   todos,
   uno,
   agregar,
   eliminar,
+  query,
 };

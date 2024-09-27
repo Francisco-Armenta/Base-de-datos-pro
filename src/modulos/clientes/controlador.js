@@ -1,12 +1,6 @@
 const TABLA = "Clientes";
 
-module.exports = function (dbinyectada) {
-  let db = dbinyectada;
-
-  if (db) {
-    db = require("../../DB/mysql");
-  }
-
+module.exports = function (db) {
   function todos() {
     return db.todos(TABLA);
   }
